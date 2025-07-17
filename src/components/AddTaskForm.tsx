@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 type Props = {
   onAdd: (title: string) => void;
@@ -7,22 +7,37 @@ type Props = {
 export const AddTaskForm = ({ onAdd }: Props) => {
   const [title, setTitle] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-    onAdd(title);
-    setTitle("");
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      const trimmedTitle = title.trim();
+      if (!trimmedTitle) return;
+      onAdd(trimmedTitle);
+      setTitle("");
+    },
+    [title, onAdd]
+  );
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Ограничиваем длину, чтобы избежать переполнения
+    if (value.length > 100) return;
+    setTitle(value);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={handleChange}
         placeholder="Новая задача"
+        aria-label="Новая задача"
+        maxLength={100}
       />
-      <button type="submit">Добавить</button>
+      <button type="submit" disabled={!title.trim()}>
+        Добавить
+      </button>
     </form>
   );
 };
