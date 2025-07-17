@@ -15,6 +15,7 @@ import {
 } from "@dnd-kit/sortable";
 import { TaskItem } from "./TaskItem";
 import type { Task } from "../types";
+import "../App.css";
 
 type Props = {
   tasks: Task[];
@@ -118,6 +119,13 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
     setShowUndo(false);
   };
 
+  const saveTaskTitle = (id: string, newTitle: string) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, title: newTitle } : task
+    );
+    onTasksChange(updatedTasks);
+  };
+
   // Скрыть кнопку через 5 секунд
   useEffect(() => {
     if (showUndo) {
@@ -133,7 +141,7 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-        <ul>
+        <div className="items">
           {tasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -143,26 +151,21 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
               isDragging={isDragging(task.id)}
               onToggle={toggleTaskCompletion}
               onDelete={deleteTask}
+              onSaveTitle={saveTaskTitle}
             />
           ))}
-        </ul>
+        </div>
       </SortableContext>
 
       {selectedTaskIds.size > 0 && (
-        <div style={{ marginTop: "1rem" }}>
-          <button
-            onClick={markSelectedAsCompleted}
-            style={{ marginRight: "10px" }}
-          >
+        <div className="btns-buttons" style={{ marginTop: "1rem" }}>
+          <button className="btn-complete" onClick={markSelectedAsCompleted}>
             Отметить как выполненные ({selectedTaskIds.size})
           </button>
-          <button
-            onClick={toggleSelectedTasksStatus}
-            style={{ marginRight: "10px" }}
-          >
+          <button className="btn-change" onClick={toggleSelectedTasksStatus}>
             Инвертировать статус ({selectedTaskIds.size})
           </button>
-          <button onClick={deleteSelectedTasks} style={{ color: "red" }}>
+          <button className="btn-delete" onClick={deleteSelectedTasks}>
             Удалить выбранные
           </button>
         </div>

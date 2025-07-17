@@ -47,7 +47,7 @@ export const TaskList = ({ tasks, onToggle, onDelete, onReorder }: Props) => {
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-        <ul>
+        <div>
           {tasks.map((task) => (
             <SortableTaskItem
               key={task.id}
@@ -56,7 +56,7 @@ export const TaskList = ({ tasks, onToggle, onDelete, onReorder }: Props) => {
               onDelete={onDelete}
             />
           ))}
-        </ul>
+        </div>
       </SortableContext>
     </DndContext>
   );
