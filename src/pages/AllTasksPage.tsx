@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MultiDragTaskList as TaskList } from "../components/MultiDragTaskList";
+import { MultiDragTaskList } from "../components/MultipleDragTaskList";
 import { AddTaskForm } from "../components/AddTaskForm";
 import type { Task } from "../types";
 import { taskService } from "../services/taskService";
@@ -23,7 +23,7 @@ export const AllTasksPage = () => {
     taskService.saveTasks(updatedTasks);
   };
 
-  const reorderTasks = (updatedTasks: Task[]) => {
+  const updateTasks = (updatedTasks: Task[]) => {
     setTasks(updatedTasks);
     taskService.saveTasks(updatedTasks);
   };
@@ -32,7 +32,7 @@ export const AllTasksPage = () => {
     <div>
       <h1>Все задачи</h1>
       <AddTaskForm onAdd={addTask} />
-      <TaskList tasks={tasks} onTasksChange={reorderTasks} />
+      <MultiDragTaskList tasks={tasks} onTasksChange={updateTasks} />
     </div>
   );
 };

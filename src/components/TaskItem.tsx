@@ -6,25 +6,41 @@ type Props = {
   task: Task;
   isSelected: boolean;
   onSelect: () => void;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
   isDragging: boolean;
 };
 
-export const TaskItem = ({ task, isSelected, onSelect, isDragging }: Props) => {
+export const TaskItem = ({
+  task,
+  isSelected,
+  onSelect,
+  onToggle,
+  onDelete,
+}: Props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
-    backgroundColor: isSelected ? "#e0e0e0" : "white",
+    opacity: isSelected ? 0.7 : 1,
+    backgroundColor: isSelected ? "#f0f0f0" : "white",
   };
 
   return (
     <li ref={setNodeRef} style={style} {...attributes}>
       <span {...listeners}>☰</span>{" "}
-      <input type="checkbox" checked={isSelected} onChange={onSelect} />{" "}
+      <input type="checkbox" checked={isSelected} onChange={onSelect} />
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
+      />
       {task.title}
+      <button onClick={() => onDelete(task.id)} style={{ marginLeft: "10px" }}>
+        Удалить
+      </button>
     </li>
   );
 };
