@@ -26,8 +26,8 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
   const [selectedTaskIds, setSelectedTaskIds] = useState<Set<string>>(
     new Set()
   );
-  const [deletedTasks, setDeletedTasks] = useState<Task[]>([]); // Хранилище удалённых задач
-  const [showUndo, setShowUndo] = useState(false); // Показывать ли кнопку "Отменить"
+  const [deletedTasks, setDeletedTasks] = useState<Task[]>([]);
+  const [showUndo, setShowUndo] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -126,7 +126,6 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
     onTasksChange(updatedTasks);
   };
 
-  // Скрыть кнопку через 5 секунд
   useEffect(() => {
     if (showUndo) {
       const timer = setTimeout(() => {
@@ -173,8 +172,8 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
 
       {showUndo && (
         <div style={{ marginTop: "1rem" }}>
-          <button onClick={undoDelete} style={{ color: "green" }}>
-            ⏪ Отменить удаление
+          <button className="btn-change" onClick={undoDelete}>
+            ⏪ Undo deletion
           </button>
         </div>
       )}

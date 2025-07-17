@@ -24,7 +24,7 @@ export const UndoNotification = ({
   return (
     <div className="undo-notification">
       <span>{message}</span>
-      <button onClick={onUndo}>Отменить</button>
+      <button onClick={onUndo}>Cancel</button>
     </div>
   );
 };

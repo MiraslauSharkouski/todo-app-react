@@ -20,7 +20,7 @@ export const AddTaskForm = ({ onAdd }: Props) => {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Ограничиваем длину, чтобы избежать переполнения
+
     if (value.length > 100) return;
     setTitle(value);
   }, []);
