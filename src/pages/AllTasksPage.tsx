@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TaskList } from "../components/TaskList";
+import { MultiDragTaskList as TaskList } from "../components/MultiDragTaskList";
 import { AddTaskForm } from "../components/AddTaskForm";
 import type { Task } from "../types";
 import { taskService } from "../services/taskService";
@@ -23,20 +23,6 @@ export const AllTasksPage = () => {
     taskService.saveTasks(updatedTasks);
   };
 
-  const toggleTask = (id: string) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-    taskService.saveTasks(updatedTasks);
-  };
-
-  const deleteTask = (id: string) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
-    taskService.saveTasks(updatedTasks);
-  };
-
   const reorderTasks = (updatedTasks: Task[]) => {
     setTasks(updatedTasks);
     taskService.saveTasks(updatedTasks);
@@ -46,12 +32,7 @@ export const AllTasksPage = () => {
     <div>
       <h1>Все задачи</h1>
       <AddTaskForm onAdd={addTask} />
-      <TaskList
-        tasks={tasks}
-        onToggle={toggleTask}
-        onDelete={deleteTask}
-        onReorder={reorderTasks}
-      />
+      <TaskList tasks={tasks} onTasksChange={reorderTasks} />
     </div>
   );
 };
