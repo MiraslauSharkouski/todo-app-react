@@ -37,11 +37,21 @@ export const AllTasksPage = () => {
     taskService.saveTasks(updatedTasks);
   };
 
+  const reorderTasks = (updatedTasks: Task[]) => {
+    setTasks(updatedTasks);
+    taskService.saveTasks(updatedTasks);
+  };
+
   return (
     <div>
       <h1>Все задачи</h1>
       <AddTaskForm onAdd={addTask} />
-      <TaskList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+      <TaskList
+        tasks={tasks}
+        onToggle={toggleTask}
+        onDelete={deleteTask}
+        onReorder={reorderTasks}
+      />
     </div>
   );
 };

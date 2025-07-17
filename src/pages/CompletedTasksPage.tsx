@@ -30,7 +30,14 @@ export const CompletedTasksPage = () => {
   return (
     <div>
       <h1>Завершённые задачи</h1>
-      <TaskList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+      <TaskList
+        tasks={tasks}
+        onToggle={toggleTask}
+        onDelete={deleteTask}
+        onReorder={function (_tasks: Task[]): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </div>
   );
 };
