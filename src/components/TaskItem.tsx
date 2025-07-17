@@ -6,9 +6,9 @@ type Props = {
   task: Task;
   isSelected: boolean;
   onSelect: () => void;
+  isDragging: boolean;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  isDragging: boolean;
 };
 
 export const TaskItem = ({

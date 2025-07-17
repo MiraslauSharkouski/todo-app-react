@@ -10,6 +10,7 @@ import {
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { TaskItem } from "./TaskItem";
@@ -27,7 +28,9 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
 
   const sensors = useSensors(
     useSensor(PointerSensor),
-    useSensor(KeyboardSensor)
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -49,19 +52,14 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
     setSelectedTaskIds(newSet);
   };
 
-  const toggleTaskCompletion = (id: string) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    onTasksChange(updatedTasks);
-  };
+  const isDragging = (id: string) => selectedTaskIds.has(id);
 
-  const deleteTask = (id: string) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    onTasksChange(updatedTasks);
-    setSelectedTaskIds(
-      new Set([...selectedTaskIds].filter((taskId) => taskId !== id))
+  const markSelectedAsCompleted = () => {
+    const updatedTasks = tasks.map((task) =>
+      selectedTaskIds.has(task.id) ? { ...task, completed: true } : task
     );
+    onTasksChange(updatedTasks);
+    setSelectedTaskIds(new Set());
   };
 
   const deleteSelectedTasks = () => {
@@ -80,18 +78,30 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
               task={task}
               isSelected={selectedTaskIds.has(task.id)}
               onSelect={() => toggleSelection(task.id)}
-              onToggle={toggleTaskCompletion}
-              onDelete={deleteTask}
-              isDragging={false}
+              isDragging={isDragging(task.id)}
+              onToggle={function (_id: string): void {
+                throw new Error("Function not implemented.");
+              }}
+              onDelete={function (_id: string): void {
+                throw new Error("Function not implemented.");
+              }}
             />
           ))}
         </ul>
       </SortableContext>
 
       {selectedTaskIds.size > 0 && (
-        <button onClick={deleteSelectedTasks} style={{ color: "red" }}>
-          Удалить выбранные ({selectedTaskIds.size})
-        </button>
+        <div style={{ marginTop: "1rem" }}>
+          <button
+            onClick={markSelectedAsCompleted}
+            style={{ marginRight: "10px" }}
+          >
+            Отметить как выполненные ({selectedTaskIds.size})
+          </button>
+          <button onClick={deleteSelectedTasks} style={{ color: "red" }}>
+            Удалить выбранные
+          </button>
+        </div>
       )}
     </DndContext>
   );
