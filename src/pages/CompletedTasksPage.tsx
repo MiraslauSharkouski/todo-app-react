@@ -31,7 +31,7 @@ export const CompletedTasksPage = () => {
 
   return (
     <div>
-      <h1>Завершённые задачи</h1>
+      <h1>Completed tasks</h1>
       <div className="items">
         {tasks.map((task) => (
           <SortableTaskItem

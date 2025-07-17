@@ -30,7 +30,7 @@ export const AllTasksPage = () => {
 
   return (
     <div>
-      <h1>Все задачи</h1>
+      <h1>All tasks</h1>
       <AddTaskForm onAdd={addTask} />
       <MultiDragTaskList tasks={tasks} onTasksChange={updateTasks} />
     </div>

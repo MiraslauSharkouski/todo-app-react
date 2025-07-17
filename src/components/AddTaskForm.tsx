@@ -31,12 +31,12 @@ export const AddTaskForm = ({ onAdd }: Props) => {
         type="text"
         value={title}
         onChange={handleChange}
-        placeholder="Новая задача"
-        aria-label="Новая задача"
+        placeholder="New task"
+        aria-label="New task"
         maxLength={100}
       />
       <button type="submit" disabled={!title.trim()}>
-        Добавить
+        Add
       </button>
     </form>
   );

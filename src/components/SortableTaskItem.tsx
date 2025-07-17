@@ -27,7 +27,9 @@ export const SortableTaskItem = ({ task, onToggle, onDelete }: Props) => {
         onChange={() => onToggle(task.id)}
       />
       {task.title}
-      <button onClick={() => onDelete(task.id)}>Удалить</button>
+      <button className="btn-delete" onClick={() => onDelete(task.id)}>
+        Delete
+      </button>
     </div>
   );
 };

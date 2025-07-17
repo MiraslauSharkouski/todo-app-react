@@ -160,13 +160,13 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
       {selectedTaskIds.size > 0 && (
         <div className="btns-buttons" style={{ marginTop: "1rem" }}>
           <button className="btn-complete" onClick={markSelectedAsCompleted}>
-            Отметить как выполненные ({selectedTaskIds.size})
+            Mark as done ({selectedTaskIds.size})
           </button>
           <button className="btn-change" onClick={toggleSelectedTasksStatus}>
-            Инвертировать статус ({selectedTaskIds.size})
+            Invert status ({selectedTaskIds.size})
           </button>
           <button className="btn-delete" onClick={deleteSelectedTasks}>
-            Удалить выбранные
+            Delete selected
           </button>
         </div>
       )}

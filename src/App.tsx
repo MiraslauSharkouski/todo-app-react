@@ -8,8 +8,8 @@ export const App = () => {
     <Router>
       <div className="app">
         <nav>
-          <Link to="/">Все задачи</Link>
-          <Link to="/completed">Завершённые</Link>
+          <Link to="/">All tasks</Link>
+          <Link to="/completed">Completed</Link>
         </nav>
         <Routes>
           <Route path="/" element={<AllTasksPage />} />

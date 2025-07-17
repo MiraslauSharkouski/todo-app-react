@@ -77,7 +77,7 @@ export const TaskItem = ({
       )}
       <div>
         <input type="checkbox" checked={isSelected} onChange={onSelect} />
-        Опции
+        Options
       </div>
       <div className="">
         <input
@@ -85,16 +85,16 @@ export const TaskItem = ({
           checked={task.completed}
           onChange={() => onToggle(task.id)}
         />
-        Завершен
+        Completed
       </div>
       <div className="buttons">
         {isEditing ? null : (
           <button className="btn-change" onClick={handleEditClick}>
-            Изменить
+            Change
           </button>
         )}
         <button className="btn-delete" onClick={() => onDelete(task.id)}>
-          Удалить
+          Delete
         </button>
       </div>
     </div>
