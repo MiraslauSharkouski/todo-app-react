@@ -68,6 +68,24 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
     setSelectedTaskIds(new Set());
   };
 
+  const toggleTaskCompletion = (id: string) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    onTasksChange(updatedTasks);
+  };
+
+  const deleteTask = (id: string) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    onTasksChange(updatedTasks);
+    // Снимаем выделение, если задача была выбрана
+    if (selectedTaskIds.has(id)) {
+      const newSet = new Set(selectedTaskIds);
+      newSet.delete(id);
+      setSelectedTaskIds(newSet);
+    }
+  };
+
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
@@ -79,12 +97,8 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
               isSelected={selectedTaskIds.has(task.id)}
               onSelect={() => toggleSelection(task.id)}
               isDragging={isDragging(task.id)}
-              onToggle={function (_id: string): void {
-                throw new Error("Function not implemented.");
-              }}
-              onDelete={function (_id: string): void {
-                throw new Error("Function not implemented.");
-              }}
+              onToggle={toggleTaskCompletion}
+              onDelete={deleteTask}
             />
           ))}
         </ul>
