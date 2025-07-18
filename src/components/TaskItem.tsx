@@ -3,6 +3,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "../App.css";
 import { useState } from "react";
+import { ConfirmModal } from "./ConfirmModal";
+import { EditTaskModal } from "./EditTaskModal";
 
 type Props = {
   task: Task;
@@ -36,9 +38,17 @@ export const TaskItem = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveTitle = (newTitle: string) => {
+    if (newTitle && newTitle !== task.title) {
+      onSaveTitle(task.id, newTitle);
+    }
   };
 
   const handleSave = () => {
@@ -56,6 +66,19 @@ export const TaskItem = ({
     if (e.key === "Enter") {
       handleSave();
     }
+  };
+
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDelete(task.id);
+    setIsModalOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -93,10 +116,22 @@ export const TaskItem = ({
             Change
           </button>
         )}
-        <button className="btn-delete" onClick={() => onDelete(task.id)}>
+        <button className="btn-delete" onClick={handleDeleteClick}>
           Delete
         </button>
       </div>
+      <ConfirmModal
+        isOpen={isModalOpen}
+        message="Вы уверены, что хотите удалить эту задачу?"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
+      <EditTaskModal
+        isOpen={isEditModalOpen}
+        taskTitle={task.title}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSaveTitle}
+      />
     </div>
   );
 };
