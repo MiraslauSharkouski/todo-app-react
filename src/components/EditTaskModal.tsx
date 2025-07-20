@@ -31,7 +31,7 @@ export const EditTaskModal = ({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2>Редактировать задачу</h2>
+        <h2>Edit task</h2>
         <input
           type="text"
           value={editedTitle}
@@ -41,11 +41,11 @@ export const EditTaskModal = ({
           className="edit-task-input"
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="btn-confirm">
-            Сохранить
+          <button className="btn-change" onClick={handleSave}>
+            Save
           </button>
-          <button onClick={onClose} className="btn-cancel">
-            Отмена
+          <button onClick={onClose} className="btn-delete">
+            Cancel
           </button>
         </div>
       </div>
