@@ -173,7 +173,7 @@ export const MultiDragTaskList = ({ tasks, onTasksChange }: Props) => {
       {showUndo && (
         <div style={{ marginTop: "1rem" }}>
           <button className="btn-change" onClick={undoDelete}>
-            ⏪ Undo deletion
+            Undo deletion
           </button>
         </div>
       )}

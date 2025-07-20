@@ -1,3 +1,5 @@
+import "../App.css";
+
 type Props = {
   isOpen: boolean;
   message: string;
@@ -18,11 +20,11 @@ export const ConfirmModal = ({
       <div className="modal">
         <p>{message}</p>
         <div className="modal-buttons">
-          <button onClick={onConfirm} className="btn-confirm">
-            Удалить
+          <button className="btn-delete" onClick={onConfirm}>
+            Delete
           </button>
-          <button onClick={onCancel} className="btn-cancel">
-            Отмена
+          <button onClick={onCancel} className="btn-change">
+            Cancel
           </button>
         </div>
       </div>

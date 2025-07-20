@@ -122,7 +122,7 @@ export const TaskItem = ({
       </div>
       <ConfirmModal
         isOpen={isModalOpen}
-        message="Вы уверены, что хотите удалить эту задачу?"
+        message="Are you sure you want to delete this task?"
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />
